@@ -103,12 +103,10 @@ class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
     }
 
     private fun actualizarProducto(producto: Producto) {
-        FirebaseDatabase.getInstance()
-            .getReference("productos")
-            .child(producto.id)
-            .setValue(producto)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Producto actualizado", Toast.LENGTH_SHORT).show()
-            }
+        val fragment = EditarProductoFragment.newInstance(producto)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.flayContenedor, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
