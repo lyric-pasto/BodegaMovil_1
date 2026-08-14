@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8FAFC"
+    android:background="#F4F7F6"
     tools:context=".historial_ventas">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarHistorial"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/orange_stronge"
+        android:background="@color/verde_principal"
         app:title="Historial de Ventas"
         app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/icon_back"
@@ -45,7 +45,7 @@
                     android:text="Desde"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/orange_stronge"
+                    android:textColor="@color/verde_principal"
                     android:layout_marginBottom="3dp"/>
 
                 <TextView
@@ -56,6 +56,7 @@
                     android:textSize="13sp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="10dp"
+                    android:textColor="#1E293B"
                     android:background="@drawable/bg_field" />
 
             </LinearLayout>
@@ -73,7 +74,7 @@
                     android:text="Hasta"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/orange_stronge"
+                    android:textColor="@color/verde_principal"
                     android:layout_marginBottom="3dp"/>
 
                 <TextView
@@ -84,13 +85,14 @@
                     android:textSize="13sp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="10dp"
+                    android:textColor="#1E293B"
                     android:background="@drawable/bg_field" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- FILTROS: METODO Y CATEGORIA -->
+        <!-- FILTROS: METODO DE PAGO -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +106,7 @@
                 android:text="Método:"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:textColor="@color/orange_stronge"
+                android:textColor="@color/verde_principal"
                 android:layout_marginEnd="8dp"/>
 
             <Spinner
@@ -177,7 +179,7 @@
 
         </HorizontalScrollView>
 
-        <!-- TARJETA TOTALES -->
+        <!-- TARJETA TOTALES EN COLOR VERDE PRINCIPAL -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -236,18 +238,18 @@
                     android:text="S/ 0.00"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/orange_low"/>
+                    android:textColor="#C8E6C9"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- ENCABEZADO DE TABLA -->
+        <!-- ENCABEZADO DE TABLA (VERDE) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/orange_stronge"
+            android:background="@color/verde_principal"
             android:paddingHorizontal="8dp"
             android:paddingVertical="8dp">
 
@@ -356,7 +358,7 @@
             android:layout_marginStart="6dp"
             android:text="+ Nueva Venta"
             app:cornerRadius="12dp"
-            app:backgroundTint="@color/orange_stronge"/>
+            app:backgroundTint="@color/verde_principal"/>
 
     </LinearLayout>
 

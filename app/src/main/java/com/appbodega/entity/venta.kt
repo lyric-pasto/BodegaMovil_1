@@ -3,17 +3,12 @@ package com.appbodega.entity
 import java.io.Serializable
 
 data class venta(
-    var id: String = "",
-    var codigo: String = "",
-    var fecha: String = "",
-    var cantidad: Int = 0,
-    var metodo: String = "Efectivo",
-    var categoria: String = "",
-    var total: Double = 0.0,
-    var productoId: String = "",
-    var nombreProducto: String = "",
-    var tipoCliente: String = "Normal", // "Normal" o "RUC"
-    var documentoCliente: String = "",
-    var nombreCliente: String = "",
-    var precioUnitario: Double = 0.0
+    val id: String = "",           // String porque Firebase genera IDs tipo "-NxAbc123"
+    val codigo: String = "",       // "V-001", generado automáticamente
+    val fecha: String = "",        // "dd/MM/yyyy"
+    val cantidad: Int = 0,
+    val metodo: String = "",       // "Efectivo" o "Yape"
+    val categoria: String = "",    // categoría del producto vendido
+    val total: Double = 0.0,
+    val productoId: String = ""    // String, igual que Producto.id
 ) : Serializable

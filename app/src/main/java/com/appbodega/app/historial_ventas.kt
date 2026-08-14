@@ -71,12 +71,13 @@ class historial_ventas : AppCompatActivity() {
         btnAtras = findViewById(R.id.btnAtras)
         btnNuevaVenta = findViewById(R.id.btnNuevaVenta)
 
-        // Fechas por defecto: 1er día del mes actual hasta fin de año
+        // Fechas por defecto: 1er día del año hasta fin de año
         val cal = Calendar.getInstance()
+        cal.set(Calendar.MONTH, 0)
         cal.set(Calendar.DAY_OF_MONTH, 1)
         tvDesde.text = formatoFecha.format(cal.time)
 
-        cal.add(Calendar.MONTH, 11)
+        cal.set(Calendar.MONTH, 11)
         cal.set(Calendar.DAY_OF_MONTH, 31)
         tvHasta.text = formatoFecha.format(cal.time)
     }
@@ -119,7 +120,7 @@ class historial_ventas : AppCompatActivity() {
     }
 
     private fun cargarMetodos() {
-        val metodos = arrayOf("Todos", "Efectivo", "Yape", "Plin", "Tarjeta", "Transferencia")
+        val metodos = arrayOf("Todos", "Efectivo", "Yape")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, metodos)
         spinnerMetodo.adapter = adapter
 
@@ -224,20 +225,22 @@ class historial_ventas : AppCompatActivity() {
     }
 
     private fun mostrarDetalleVenta(v: venta) {
+        val subtotal = if (v.total > 0.0) v.total / 1.18 else 0.0
+        val igv = if (v.total > 0.0) v.total - subtotal else 0.0
+
         val detalle = """
             Código: ${v.codigo}
             Fecha: ${v.fecha}
-            Cliente: ${v.nombreCliente} (${v.tipoCliente} ${v.documentoCliente})
-            Producto: ${v.nombreProducto}
             Categoría: ${v.categoria}
             Cantidad: ${v.cantidad} unid.
-            Precio Unitario: S/ ${String.format(Locale.US, "%.2f", v.precioUnitario)}
             Método de Pago: ${v.metodo}
+            Subtotal: S/ ${String.format(Locale.US, "%.2f", subtotal)}
+            I.G.V. (18%): S/ ${String.format(Locale.US, "%.2f", igv)}
             Total Cobrado: S/ ${String.format(Locale.US, "%.2f", v.total)}
         """.trimIndent()
 
         AlertDialog.Builder(this)
-            .setTitle("Detalle de Venta")
+            .setTitle("Detalle de Venta (${v.codigo})")
             .setMessage(detalle)
             .setPositiveButton("Cerrar", null)
             .setNegativeButton("Anular Venta") { _, _ ->
@@ -249,7 +252,7 @@ class historial_ventas : AppCompatActivity() {
     private fun confirmarEliminarVenta(v: venta) {
         AlertDialog.Builder(this)
             .setTitle("¿Anular Venta?")
-            .setMessage("¿Deseas anular esta venta? Se restaurará el stock de ${v.cantidad} unidades en el producto.")
+            .setMessage("¿Deseas anular la venta ${v.codigo}? Se devolverán ${v.cantidad} unidades al stock del producto.")
             .setPositiveButton("Sí, Anular") { _, _ ->
                 val db = FirebaseDatabase.getInstance().reference
 
@@ -262,7 +265,7 @@ class historial_ventas : AppCompatActivity() {
                             db.child("productos").child(v.productoId).child("cantidad").setValue(stockActual + v.cantidad)
                         }
                     }
-                    Toast.makeText(this, "Venta anulada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Venta anulada y stock restaurado", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancelar", null)

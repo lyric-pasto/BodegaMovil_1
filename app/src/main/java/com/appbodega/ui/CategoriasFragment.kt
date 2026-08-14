@@ -6,27 +6,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.Adapter.CategoriaAdapter
+import com.appbodega.Adapter.ProductoAdapter
 import com.appbodega.app.InicioActivity
 import com.appbodega.app.R
 import com.appbodega.app.registro_ventas
+import com.appbodega.entity.Producto
 import com.appbodega.provider.CategoriaProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class CategoriasFragment : Fragment() {
 
     private lateinit var btnMenu: ImageButton
     private lateinit var btnCerrar: ImageButton
     private lateinit var recyclerCategorias: RecyclerView
-    private lateinit var adapter: CategoriaAdapter
+    private lateinit var adapterCategoria: CategoriaAdapter
+    private lateinit var adapterProducto: ProductoAdapter
     private lateinit var etBuscar: TextInputEditText
     private lateinit var btnRegistrarProducto: MaterialButton
     private lateinit var btnRegistrarVenta: MaterialButton
+
+    private val todosLosProductos = mutableListOf<Producto>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,27 +76,94 @@ class CategoriasFragment : Fragment() {
         recyclerCategorias.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         val todasLasCategorias = CategoriaProvider.listaCategorias
-        adapter = CategoriaAdapter(todasLasCategorias) { categoria ->
+        adapterCategoria = CategoriaAdapter(todasLasCategorias) { categoria ->
             abrirFragmentCategoria(categoria.nombre)
         }
-        recyclerCategorias.adapter = adapter
+        recyclerCategorias.adapter = adapterCategoria
+
+        cargarProductosParaBusquedaGlobal()
 
         etBuscar.addTextChangedListener { texto ->
             val query = texto.toString().trim()
-            val filtradas = if (query.isEmpty()) {
-                todasLasCategorias
+            if (query.isEmpty()) {
+                adapterCategoria = CategoriaAdapter(todasLasCategorias) { categoria ->
+                    abrirFragmentCategoria(categoria.nombre)
+                }
+                recyclerCategorias.adapter = adapterCategoria
             } else {
-                todasLasCategorias.filter {
-                    it.nombre.contains(query, ignoreCase = true)
+                val categoriasCoincidentes = todasLasCategorias.filter {
+                    it.nombre.contains(query, ignoreCase = true) ||
+                    it.descripcion.contains(query, ignoreCase = true)
+                }
+
+                val productosCoincidentes = todosLosProductos.filter {
+                    it.nombre.contains(query, ignoreCase = true) ||
+                    it.descripcion.contains(query, ignoreCase = true) ||
+                    it.codigoBarras.contains(query, ignoreCase = true) ||
+                    it.categoria.contains(query, ignoreCase = true)
+                }
+
+                if (categoriasCoincidentes.isNotEmpty() && productosCoincidentes.isEmpty()) {
+                    adapterCategoria = CategoriaAdapter(categoriasCoincidentes) { categoria ->
+                        abrirFragmentCategoria(categoria.nombre)
+                    }
+                    recyclerCategorias.adapter = adapterCategoria
+                } else if (productosCoincidentes.isNotEmpty()) {
+                    adapterProducto = ProductoAdapter(
+                        productosCoincidentes,
+                        onActualizar = { producto ->
+                            actualizarProducto(producto)
+                        },
+                        onEliminar = { producto ->
+                            eliminarProducto(producto.id)
+                        }
+                    )
+                    recyclerCategorias.adapter = adapterProducto
+                } else {
+                    adapterCategoria = CategoriaAdapter(emptyList()) {}
+                    recyclerCategorias.adapter = adapterCategoria
                 }
             }
-            adapter = CategoriaAdapter(filtradas) { categoria ->
-                abrirFragmentCategoria(categoria.nombre)
-            }
-            recyclerCategorias.adapter = adapter
         }
 
         return view
+    }
+
+    private fun cargarProductosParaBusquedaGlobal() {
+        FirebaseDatabase.getInstance().getReference("productos")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    todosLosProductos.clear()
+                    for (child in snapshot.children) {
+                        val p = child.getValue(Producto::class.java)
+                        if (p != null) {
+                            todosLosProductos.add(p)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+    }
+
+    private fun eliminarProducto(idProducto: String) {
+        FirebaseDatabase.getInstance()
+            .getReference("productos")
+            .child(idProducto)
+            .removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun actualizarProducto(producto: Producto) {
+        FirebaseDatabase.getInstance()
+            .getReference("productos")
+            .child(producto.id)
+            .setValue(producto)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Producto actualizado", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun abrirFragmentCategoria(nombre: String) {
