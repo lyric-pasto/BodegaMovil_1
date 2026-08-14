@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">BodegaMovil</string>
+    <string name="titulo_snacks">SNACKS</string>
+    <string name="titulo_bebidas">BEBIDAS</string>
+    <string name="titulo_abarrotes">ABARROTES</string>
+    <string name="titulo_limpieza">LIMPIEZA</string>
+    <string name="titulo_alcohol">ALCOHOL</string>
+    <string name="nombre_producto">NOMBRE DEL PRODUCTO</string>
+    <string name="snack_doritos">DORITOS</string>
+    <string name="snack_inkachips">INKACHIPS</string>
+    <string name="snack_picaras">PICARAS</string>
+    <string name="bebidas_cocacola">COCA-COLA</string>
+    <string name="bebidas_delvalle">DEL VALLE</string>
+    <string name="bebidas_agua_sanmateo">AGUA SAN MATEO</string>
+    <string name="abarrotes_arroz">ARROZ</string>
+    <string name="abarrotes_azucar">AZUCAR</string>
+    <string name="abarrotes_fideos">FIDEOS</string>
+    <string name="limpieza_jabon">JABON</string>
+    <string name="limpieza_detergente">DETERGENTE</string>
+    <string name="limpieza_shampoo">SHAMPOO</string>
+    <string name="alcohol_vodka">VODKA</string>
+    <string name="alcohol_vino">VINO</string>
+    <string name="alcohol_cerveza">CERVEZA</string>
+    <string name="descripcion">DESCRIPCION</string>
+    <string name="descripcion_doritos">Doritos es una marca de snacks de maíz con sabor a queso, conocidos por su textura crujiente y su sabor intenso.</string>
+    <string name="descripcion_inkachips">Inka Chips es una marca de snacks de maíz con sabor a limón, conocidos por su textura crujiente y su sabor refrescante.</string>
+    <string name="descripcion_picaras">Picaras es una marca de snacks de maíz con sabor a limón, conocidos por su textura crujiente y su sabor refrescante.</string>
+    <string name="descripcion_cocacola">Coca-Cola es una marca de refresco carbonatado con sabor a cola, conocida por su sabor dulce y burbujeante.</string>
+    <string name="descripcion_delvalle">Del Valle es una marca de jugos y néctares de frutas, conocidos por su sabor natural y variedad de sabores.</string>
+    <string name="descripcion_agua_sanmateo">Agua San Mateo es una marca de agua mineral natural, conocida por su pureza y frescura.</string>
+    <string name="descripcion_arroz">El arroz es un alimento básico en muchas culturas, conocido por su versatilidad y valor nutricional.</string>
+    <string name="descripcion_azucar">El azúcar es un ingrediente dulce utilizado en la cocina y la repostería, conocido por su capacidad para endulzar alimentos y bebidas.</string>
+    <string name="descripcion_fideos">Los fideos son un tipo de pasta hecha de harina y agua, conocidos por su versatilidad en la cocina y su capacidad para absorber sabores.</string>
+    <string name="descripcion_jabon">El jabón es un producto de limpieza utilizado para eliminar la suciedad y las bacterias de la piel, conocido por su capacidad para mantener la higiene personal.</string>
+    <string name="descripcion_detergente">El detergente es un producto de limpieza utilizado para eliminar la suciedad y las manchas de la ropa, conocido por su capacidad para mantener la ropa limpia y fresca.</string>
+    <string name="descripcion_shampoo">El shampoo es un producto de limpieza utilizado para eliminar la suciedad y el exceso de grasa del cabello, conocido por su capacidad para mantener el cabello limpio y saludable.</string>
+    <string name="descripcion_vodka">El vodka es una bebida alcohólica destilada, conocida por su sabor neutro y su versatilidad en la preparación de cócteles.</string>
+    <string name="descripcion_vino">El vino es una bebida alcohólica fermentada a partir de uvas, conocida por su variedad de sabores y su capacidad para maridar con diferentes
+    alimentos.</string>
+    <string name="descripcion_cerveza">La cerveza es una bebida alcohólica fermentada a partir de cereales, conocida por su variedad de estilos y su capacidad para refrescar en días calurosos.</string>
+    <string name="cantidad">CANTIDAD</string>
+    <string name="precio">PRECIO</string>
+    <string name="precio_doritos">S/.2.50</string>
+    <string name="precio_inkachips">S/.3.20</string>
+    <string name="precio_picaras">S/.2.50</string>
+
+
+    <string name="recuperar_contraseña">Recuperar Contraseña</string>
+    <string name="olvidaste_tu_contraseña">¿Olvidaste tu contraseña?</string>
+    <string name="acceder">Acceder</string>
+    <string name="ingrese_su_contrase_a">Ingrese su contraseña</string>
+    <string name="ingrese_su_usuario">Ingrese su usuario</string>
+    <string name="gestor_de_ventas">Gestor de Ventas</string>
+    <string name="minimarket">MiniMarket</string>
+
+    <string-array name="lista_categorias">
+        <item>Bebidas</item>
+        <item>Abarrotes</item>
+        <item>Limpieza</item>
+        <item>Snacks</item>
+        <item>Alcohol</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
